@@ -1,3 +1,6 @@
+using Comany.Database.Access.Contexts;
+using Microsoft.EntityFrameworkCore;
+
 namespace MVC_ASP_Test
 {
     public class Program
@@ -10,6 +13,8 @@ namespace MVC_ASP_Test
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+
+            builder.Services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
