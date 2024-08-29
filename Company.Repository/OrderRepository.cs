@@ -12,6 +12,7 @@ namespace Company.Repository
     public class OrderRepository : IOrderRepository
     {
         private readonly NorthwindContext _context;
+        private readonly  NorthwindContextProcedures _contextProcedures;
         public OrderRepository(NorthwindContext context)
         {
             this._context = context;
@@ -20,13 +21,13 @@ namespace Company.Repository
         bool IOrderRepository.CreateOrder(Order order)
         {
             this._context.Orders.Add(order);
-            return this._context.SaveChanges() > 0;
+            return true;
         }
 
         bool IOrderRepository.DeleteOrder(Order order)
         {
             this._context.Orders.Remove(order);
-            return this._context.SaveChanges() > 0;
+            return true;
         }
 
         ICollection<Order> IOrderRepository.GetOrders()
@@ -34,24 +35,17 @@ namespace Company.Repository
             return this._context.Orders.ToList();
         }
 
-        ICollection<Order> IOrderRepository.GetOrdersByCustomerId(string customerId)
+        ICollection<Order> IOrderRepository.CustOrdersOrdersAsync(string customerId)
         {
-            return this._context.Orders.Where(x => x.CustomerId == customerId).ToList();
-        }
-
-        ICollection<Order> IOrderRepository.GetOrdersByEmployeeId(int employeeId)
-        {
-            
-        }
-
-        bool IOrderRepository.Save()
-        {
-            
+            return this._context.Orders
+                            .Where(o => o.CustomerId == customerId)
+                            .ToList();
         }
 
         bool IOrderRepository.UpdateOrder(Order order)
         {
-            
+            this._context.Orders.Update(order);
+            return true;
         }
     }
 }

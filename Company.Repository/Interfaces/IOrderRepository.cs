@@ -11,11 +11,9 @@ namespace Company.Repository.Interfaces
     {
         ICollection<Order> GetOrders();
 
-        ICollection<Order> GetOrdersByEmployeeId(int employeeId);
-        ICollection<Order> GetOrdersByCustomerId(string customerId);
+        ICollection<Order> CustOrdersOrdersAsync(string customerId);
         bool CreateOrder(Order order);
         bool UpdateOrder(Order order);
         bool DeleteOrder(Order order);
-        bool Save();
     }
 }
