@@ -13,39 +13,47 @@ namespace Company.Repository
     {
         private readonly NorthwindContext _context;
         private readonly  NorthwindContextProcedures _contextProcedures;
-        public OrderRepository(NorthwindContext context)
+        public OrderRepository(NorthwindContext context, NorthwindContextProcedures contextProcedures)
         {
             this._context = context;
+            this._contextProcedures = contextProcedures;
         }
 
-        bool IOrderRepository.CreateOrder(Order order)
+        void IOrderRepository.Add(Order order)
         {
             this._context.Orders.Add(order);
-            return true;
+            this._context.SaveChanges();
         }
 
-        bool IOrderRepository.DeleteOrder(Order order)
+        ICollection<CustOrdersOrdersResult> CustOrdersOrdersAsync(string customerId)
         {
-            this._context.Orders.Remove(order);
-            return true;
+            //return this._context.Orders
+            //                .Where(o => o.CustomerId == customerId)
+            //                .ToList();
+
+            return (ICollection<CustOrdersOrdersResult>)this._contextProcedures.CustOrdersOrdersAsync(customerId);
         }
 
-        ICollection<Order> IOrderRepository.GetOrders()
+        void IOrderRepository.Delete(int id)
+        {
+            this._context.Orders.Remove(this._context.Orders.Find(id));
+            this._context.SaveChanges();
+        }
+
+        IEnumerable<Order> IOrderRepository.GetAll()
         {
             return this._context.Orders.ToList();
         }
 
-        ICollection<Order> IOrderRepository.CustOrdersOrdersAsync(string customerId)
+        Order IOrderRepository.GetById(int id)
         {
-            return this._context.Orders
-                            .Where(o => o.CustomerId == customerId)
-                            .ToList();
+            return this._context.Orders.Find(id);
         }
 
-        bool IOrderRepository.UpdateOrder(Order order)
+        void IOrderRepository.Update(Order order)
         {
             this._context.Orders.Update(order);
-            return true;
+            this._context.SaveChanges();
         }
     }
 }
