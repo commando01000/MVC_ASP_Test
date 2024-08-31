@@ -1,4 +1,4 @@
-﻿using Comany.Database.Access.Entities;
+﻿using Company.Database.Access.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Company.Repository.Interfaces
 {
-    internal interface IEmployeeRepository
+    public interface IEmployeeRepository
     {
-        IEnumerable<Employee> GetAll();
-        Employee GetById(int id);
-        void Add(Employee employee);
-        void Update(Employee employee);
-        void Delete(int id);
+       public IEnumerable<Employee> GetAll();
+       public Employee GetById(int id);
+       public void Add(Employee employee);
+       public void Update(Employee employee);
+       public void Delete(int id);
     }
 }

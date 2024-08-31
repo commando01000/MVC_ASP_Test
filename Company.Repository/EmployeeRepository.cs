@@ -1,5 +1,5 @@
-﻿using Comany.Database.Access.Contexts;
-using Comany.Database.Access.Entities;
+﻿using Company.Database.Access.Contexts;
+using Company.Database.Access.Entities;
 using Company.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -16,13 +16,13 @@ namespace Company.Repository
         {
             this._context = context;
         }
-        void IEmployeeRepository.Add(Employee employee)
+       void IEmployeeRepository.Add(Employee employee)
         {
             this._context.Employees.Add(employee);
             this._context.SaveChanges();
         }
 
-        void IEmployeeRepository.Delete(int id)
+       void IEmployeeRepository.Delete(int id)
         {
             this._context.Employees.Remove(this._context.Employees.Find(id));
             this._context.SaveChanges();
@@ -35,12 +35,13 @@ namespace Company.Repository
 
         Employee IEmployeeRepository.GetById(int id)
         {
-            throw new NotImplementedException();
+            return this._context.Employees.Find(id);
         }
 
         void IEmployeeRepository.Update(Employee employee)
         {
-            throw new NotImplementedException();
+            this._context.Employees.Update(employee);
+            this._context.SaveChanges();
         }
     }
 }

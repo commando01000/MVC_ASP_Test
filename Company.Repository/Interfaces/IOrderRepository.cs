@@ -1,4 +1,4 @@
-﻿using Comany.Database.Access.Entities;
+﻿using Company.Database.Access.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

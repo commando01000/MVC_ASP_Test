@@ -1,5 +1,5 @@
-﻿using Comany.Database.Access.Contexts;
-using Comany.Database.Access.Entities;
+﻿using Company.Database.Access.Contexts;
+using Company.Database.Access.Entities;
 using Company.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
