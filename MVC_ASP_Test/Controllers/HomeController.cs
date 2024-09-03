@@ -1,5 +1,6 @@
 using Company.Repository;
 using Company.Repository.Interfaces;
+using Company.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using MVC_ASP_Test.Models;
 using System.Diagnostics;
@@ -9,16 +10,16 @@ namespace MVC_ASP_Test.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private IEmployeeRepository _employeeRepository;
-        public HomeController(ILogger<HomeController> logger, IEmployeeRepository employeeRepository)
+        private IEmployeeService _employeeService; // will be injected by;
+        public HomeController(ILogger<HomeController> logger, IEmployeeService employeeService)
         {
-            _employeeRepository = employeeRepository;
+            _employeeService = employeeService;
             _logger = logger;
         }
 
        public IActionResult Index()
         {
-            var employees = _employeeRepository.GetAll();
+            var employees = _employeeService.GetAll();
             return View(employees);
         }
 

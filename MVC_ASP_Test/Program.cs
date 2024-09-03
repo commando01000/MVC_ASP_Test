@@ -2,6 +2,8 @@ using Company.Repository;
 using Company.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Company.Database.Access.Contexts;
+using Company.Service.Interfaces;
+using Company.Service.Services;
 
 namespace MVC_ASP_Test
 {
@@ -18,7 +20,8 @@ namespace MVC_ASP_Test
             builder.Services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-            
+            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+
             var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
