@@ -1,0 +1,32 @@
+﻿@model IEnumerable<CustOrdersDetailResult>
+
+@{
+    ViewData["Title"] = "Order Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Product Name</th>
+            <th scope="col">Unit Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Discount</th>
+            <th scope="col">Extended Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.UnitPrice.ToString("C")</td> <!-- Format as currency -->
+                <td>@item.Quantity</td>
+                <td>@item.Discount?.ToString()</td> <!-- Handle nullable Discount -->
+                <td>@item.ExtendedPrice?.ToString("C")</td> <!-- Handle nullable ExtendedPrice -->
+        </tr>
+        }
+    </tbody>
+</table>

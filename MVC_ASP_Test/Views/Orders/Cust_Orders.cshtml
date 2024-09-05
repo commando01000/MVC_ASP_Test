@@ -1,0 +1,30 @@
+﻿@model IEnumerable<CustOrdersOrdersResult>
+
+@{
+    ViewData["Title"] = "View Customer Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Order ID</th>
+            <th scope="col">Order Date</th>
+            <th scope="col">Required Date</th>
+            <th scope="col">Shipped Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                    <td>@item.OrderID</td>
+                    <td>@item.OrderDate?.ToString("yyyy-MM-dd")</td> <!-- Formatting the date -->
+                    <td>@item.RequiredDate?.ToString("yyyy-MM-dd")</td>
+                    <td>@item.ShippedDate?.ToString("yyyy-MM-dd")</td>
+            </tr>
+        }
+    </tbody>
+</table>

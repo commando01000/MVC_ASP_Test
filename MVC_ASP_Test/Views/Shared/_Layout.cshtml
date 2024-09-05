@@ -27,6 +27,9 @@
                         <li class="nav-item">
                             <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "About" && ViewContext.RouteData.Values["action"].ToString() == "Index" ? "text-success" : "text-dark")" asp-area="" asp-controller="About" asp-action="Index">About Us</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Orders" && ViewContext.RouteData.Values["action"].ToString() == "Index" ? "text-success" : "text-dark")" asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
+                        </li>
                     </ul>
                 </div>
             </div>

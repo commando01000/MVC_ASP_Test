@@ -25,7 +25,7 @@ namespace Company.Repository
             this._context.SaveChanges();
         }
 
-        ICollection<CustOrdersOrdersResult> CustOrdersOrdersAsync(string customerId)
+        ICollection<CustOrdersOrdersResult> getOrdersByCustomerId(string customerId)
         {
             //return this._context.Orders
             //                .Where(o => o.CustomerId == customerId)
