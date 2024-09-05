@@ -9,10 +9,10 @@ namespace Company.Service.Interfaces
 {
     public interface IOrderService
     {
-        IEnumerable<Order> GetAll();
+        IQueryable<Order> GetAll();
         Order GetById(int id);
         void Add(Order order);
-        void Update(Order order);
+        void Update(Order order, int id);
         void Delete(int id);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Company.Database.Access.Contexts;
 using Company.Database.Access.Entities;
 using Company.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,14 +41,16 @@ namespace Company.Repository
             this._context.SaveChanges();
         }
 
-        IEnumerable<Order> IOrderRepository.GetAll()
+        IQueryable<Order> IOrderRepository.GetAll()
         {
-            return this._context.Orders.ToList();
+            return this._context.Orders.Include(o => o.Customer).Include(o => o.Employee)
+                .Include(o => o.ShipViaNavigation).AsQueryable();
         }
 
         Order IOrderRepository.GetById(int id)
         {
-            return this._context.Orders.Find(id);
+            return this._context.Orders.Include(o => o.Customer).Include(o => o.Employee)
+                .Include(o => o.ShipViaNavigation).AsQueryable().FirstOrDefault(o => o.OrderId == id);
         }
 
         void IOrderRepository.Update(Order order)

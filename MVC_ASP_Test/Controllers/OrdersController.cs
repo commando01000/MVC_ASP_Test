@@ -74,7 +74,8 @@ namespace MVC_ASP_Test.Controllers
         // GET: OrdersController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var order = this._orderService.GetById(id);
+            return View(order);
         }
 
         // POST: OrdersController/Edit/5
@@ -86,7 +87,7 @@ namespace MVC_ASP_Test.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    this._orderService.Update(order);
+                    this._orderService.Update(order, id);
                     return RedirectToAction("Index");
                 }
                 return RedirectToAction(nameof(Index));

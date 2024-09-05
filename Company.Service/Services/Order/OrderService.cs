@@ -2,6 +2,7 @@
 using Company.Database.Access.Entities;
 using Company.Repository.Interfaces;
 using Company.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,7 +48,7 @@ namespace Company.Service.Services
             this._orderRepository.Delete(id);
         }
 
-        IEnumerable<Order> IOrderService.GetAll()
+        IQueryable<Order> IOrderService.GetAll()
         {
             return this._orderRepository.GetAll();
         }
@@ -60,12 +61,12 @@ namespace Company.Service.Services
         {
             return (ICollection<CustOrdersOrdersResult>)this._contextProcedures.CustOrdersOrdersAsync(customerId);
         }
-        void IOrderService.Update(Order order)
+        void IOrderService.Update(Order order, int id)
         {
             // Retrieve the existing order from the repository by ID
-            var existingOrder = _orderRepository.GetById(order.OrderId); // Assuming 'Id' is the primary key
+            var existingOrder = _orderRepository.GetById(id); 
 
-            if (existingOrder != null)
+            if (existingOrder != null && existingOrder.OrderId == id)
             {
                 // Update only the fields that are allowed to be changed
                 existingOrder.CustomerId = order.CustomerId;
