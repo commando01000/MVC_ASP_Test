@@ -23,6 +23,7 @@ namespace MVC_ASP_Test
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IOrderService, OrderService>();
+            //builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var app = builder.Build();
             // Configure the HTTP request pipeline.

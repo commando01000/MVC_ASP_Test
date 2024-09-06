@@ -4,6 +4,7 @@ using Company.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,13 +13,19 @@ namespace Company.Repository
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly NorthwindContext _context;
+
+        //private readonly IUnitOfWork unitOfWork;
+
+        // inject the unit of work here
         public EmployeeRepository(NorthwindContext context)
         {
             this._context = context;
+            //this.unitOfWork = _unitOfWork;
         }
        void IEmployeeRepository.Add(Employee employee)
         {
             this._context.Employees.Add(employee);
+            //this._unitOfWork.Commit();
             this._context.SaveChanges();
         }
 
