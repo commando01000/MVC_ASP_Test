@@ -77,7 +77,7 @@ namespace Company.Service.Services
             {
                 // Update only the fields that are allowed to be changed
                 existingOrder.CustomerId = order.CustomerId;
-                existingOrder.EmployeeId = order.EmployeeId;
+                existingOrder.EmployeeId = existingOrder.EmployeeId;
                 existingOrder.OrderDate = order.OrderDate;
                 existingOrder.RequiredDate = order.RequiredDate;
                 existingOrder.ShippedDate = order.ShippedDate;

@@ -1,4 +1,4 @@
-﻿@model Company.Database.Access.Entities.Order
+﻿@model Order
 
 @{
     ViewData["Title"] = "Edit";
@@ -27,9 +27,8 @@
 
             <!-- Employee ID -->
             <div class="form-group">
-                <label asp-for="EmployeeId" class="control-label"></label>
-                <input asp-for="EmployeeId" type="text" class="form-control" />
-                <span asp-validation-for="EmployeeId" class="text-danger"></span>
+                <label class="control-label">Full Name</label>
+                <input value="@ViewBag.FullName" readonly type="text" class="form-control" />
             </div>
 
             <!-- Order Date -->

@@ -60,7 +60,7 @@ namespace MVC_ASP_Test.Controllers
                    {
                        e.EmployeeID,
                        FullName = e.FirstName + " " + e.LastName
-                   }),
+                   }).ToList(),
                    "EmployeeID",
                    "FullName"
                );
@@ -93,6 +93,8 @@ namespace MVC_ASP_Test.Controllers
         public ActionResult Edit(int id)
         {
             var order = this._orderService.GetById(id);
+            var FullName = order.Employee.FirstName + " " + order.Employee.LastName;
+            ViewBag.FullName = FullName;
             return View(order);
         }
 
