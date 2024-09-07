@@ -1,4 +1,5 @@
 ﻿using Company.Database.Access.Entities;
+using Company.Repository;
 using Company.Repository.Interfaces;
 using Company.Service.Interfaces;
 using System;
@@ -72,9 +73,17 @@ namespace Company.Service.Services
             return departments;
         }
 
+
+
         Employee IEmployeeService.GetById(int id)
         {
-            throw new NotImplementedException();
+            return _employeeRepository.GetById(id);
+        }
+
+        ICollection<Employee> IEmployeeService.GetEmployeesByName(string name)
+        {
+            EmployeeRepository EmpRepo = (EmployeeRepository)_employeeRepository;
+            return EmpRepo.GetEmployeesByName(name);
         }
 
         void IEmployeeService.Update(Employee employee)

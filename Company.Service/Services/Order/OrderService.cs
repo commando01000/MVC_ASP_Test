@@ -1,5 +1,6 @@
 ﻿using Company.Database.Access.Contexts;
 using Company.Database.Access.Entities;
+using Company.Repository;
 using Company.Repository.Interfaces;
 using Company.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +54,12 @@ namespace Company.Service.Services
             return this._orderRepository.GetAll();
         }
 
+        public IQueryable <Customer> getAllCustomers()
+        {
+           OrderRepository Order_Repo = (OrderRepository) this._orderRepository;
+            return Order_Repo.getAllCustomers();
+        }
+
         Order IOrderService.GetById(int id)
         {
             return this._orderRepository.GetById(id);
@@ -90,6 +97,11 @@ namespace Company.Service.Services
                 // Handle the case where the order was not found
                 throw new KeyNotFoundException("Order not found.");
             }
+        }
+        ICollection<Shipper> IOrderService.GetShippers()
+        {
+            OrderRepository Order_Repo = (OrderRepository)this._orderRepository;
+            return Order_Repo.GetShippers();
         }
     }
 }

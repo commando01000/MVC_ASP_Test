@@ -14,5 +14,7 @@ namespace Company.Service.Interfaces
         void Add(Order order);
         void Update(Order order, int id);
         void Delete(int id);
+        public IQueryable<Customer> getAllCustomers();
+        public ICollection<Shipper> GetShippers();
     }
 }

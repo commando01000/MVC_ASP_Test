@@ -17,8 +17,13 @@ namespace MVC_ASP_Test.Controllers
             _logger = logger;
         }
 
-       public IActionResult Index()
+       public IActionResult Index(string searchInp)
         {
+            if (!string.IsNullOrEmpty(searchInp))
+            {
+                var Emps = _employeeService.GetEmployeesByName(searchInp);
+                return View(Emps);
+            }
             var employees = _employeeService.GetAll();
             return View(employees);
         }

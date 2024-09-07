@@ -14,5 +14,6 @@ namespace Company.Service.Interfaces
         public void Add(Employee employee);
         public void Update(Employee employee);
         public void Delete(int id);
+        public ICollection<Employee> GetEmployeesByName(string name);
     }
 }

@@ -1,4 +1,4 @@
-﻿@model Company.Database.Access.Entities.Order
+﻿@model Order
 
 @{
     ViewData["Title"] = "Create";
@@ -15,11 +15,16 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="CustomerId" class="control-label"></label>
-                <select asp-for="CustomerId" class ="form-control" asp-items="ViewBag.CustomerId"></select>
+                <select asp-for="CustomerId" class ="form-control" asp-items="@ViewBag.Customers">
+                    <option value="@null">---Select Customer</option>
+                </select>
+                
             </div>
             <div class="form-group">
                 <label asp-for="EmployeeId" class="control-label"></label>
-                <select asp-for="EmployeeId" class ="form-control" asp-items="ViewBag.EmployeeId"></select>
+                <select asp-for="EmployeeId" class ="form-control" asp-items="@ViewBag.Employees">
+                    <option value="@null">---Select Employee</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="OrderDate" class="control-label"></label>
@@ -38,7 +43,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="ShipVia" class="control-label"></label>
-                <select asp-for="ShipVia" class ="form-control" asp-items="ViewBag.ShipVia"></select>
+                <select asp-for="ShipVia" class ="form-control" asp-items="@ViewBag.Shippers">
+                    <option value="@null">---Select Shipper</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="ShipName" class="control-label"></label>

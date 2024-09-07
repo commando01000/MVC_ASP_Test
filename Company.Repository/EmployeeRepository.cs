@@ -29,6 +29,10 @@ namespace Company.Repository
             this._context.SaveChanges();
         }
 
+        public ICollection<Employee> GetEmployeesByName(string name)
+        {
+            return this._context.Employees.Where(e => e.FirstName.ToLower().Trim().Contains(name.ToLower().Trim()) || e.LastName.ToLower().Trim().Contains(name.ToLower().Trim())).ToList();
+        }
        void IEmployeeRepository.Delete(int id)
         {
             this._context.Employees.Remove(this._context.Employees.Find(id));

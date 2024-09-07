@@ -6,7 +6,12 @@
 
 <section class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <a asp-action="Create" class="btn btn-primary" asp-controller="Employees">Create New User</a>
+    <div>
+        <a asp-action="Create" class="btn btn-primary" asp-controller="Employees">Create New User</a>
+    </div>
+    <div>
+        <input class="form-control" type="text" placeholder="Search By Name" name="searchInp" value="" />
+    </div>
     @if (Model.Any())
     {
             <table class="table">

@@ -14,9 +14,9 @@ namespace MVC_ASP_Test.Controllers
         {
             this._employeeService = employeeService;
         }
-        public ActionResult Index()
+        public ActionResult Index(string searchInp)
         {
-            return View();
+            return View(_employeeService.GetAll());
         }
 
         // GET: EmployeesController/Details/5

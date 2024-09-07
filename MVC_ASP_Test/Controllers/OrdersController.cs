@@ -1,9 +1,11 @@
 ﻿using Company.Database.Access.Contexts;
 using Company.Database.Access.Entities;
+using Company.Repository;
 using Company.Service.Interfaces;
 using Company.Service.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using static NuGet.Packaging.PackagingConstants;
 
 namespace MVC_ASP_Test.Controllers
@@ -48,6 +50,22 @@ namespace MVC_ASP_Test.Controllers
         // GET: OrdersController/Create
         public ActionResult Create()
         {
+            // Get all employees and customers
+            var employees = this._contextProcedures.SelectALLEmployeesAsync().Result.ToList();
+            var customers = this._orderService.getAllCustomers().ToList();
+            var shippers = this._orderService.GetShippers().ToList();
+            // Create SelectLists for dropdowns
+            ViewBag.Employees = new SelectList(
+                   employees.Select(e => new
+                   {
+                       e.EmployeeID,
+                       FullName = e.FirstName + " " + e.LastName
+                   }),
+                   "EmployeeID",
+                   "FullName"
+               );
+            ViewBag.Shippers = new SelectList(shippers, "ShipperId", "CompanyName");
+            ViewBag.Customers = new SelectList(customers, "CustomerId", "CompanyName");
             return View();
         }
 

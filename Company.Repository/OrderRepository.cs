@@ -26,6 +26,11 @@ namespace Company.Repository
             this._context.SaveChanges();
         }
 
+        public IQueryable<Customer> getAllCustomers()
+        {
+            return this._context.Customers.Include(c => c.Orders).AsQueryable();
+        }
+        
         ICollection<CustOrdersOrdersResult> getOrdersByCustomerId(string customerId)
         {
             //return this._context.Orders
@@ -51,6 +56,11 @@ namespace Company.Repository
         {
             return this._context.Orders.Include(o => o.Customer).Include(o => o.Employee)
                 .Include(o => o.ShipViaNavigation).AsQueryable().FirstOrDefault(o => o.OrderId == id);
+        }
+
+       public ICollection<Shipper> GetShippers()
+        {
+            return this._context.Shippers.ToList();
         }
 
         void IOrderRepository.Update(Order order)
