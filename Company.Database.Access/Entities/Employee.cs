@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace Company.Database.Access.Entities;
@@ -55,8 +56,8 @@ public partial class Employee
     [StringLength(4)]
     public string? Extension { get; set; }
 
-    [Column(TypeName = "image")]
-    public byte[]? Photo { get; set; }
+    [NotMapped]  // Prevent EF from mapping this property to the database
+    public IFormFile? Photo { get; set; }
 
     [Column(TypeName = "ntext")]
     public string? Notes { get; set; }

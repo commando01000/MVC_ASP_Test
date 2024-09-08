@@ -1,6 +1,7 @@
 ﻿using Company.Database.Access.Entities;
 using Company.Repository;
 using Company.Repository.Interfaces;
+using Company.Service.Helper;
 using Company.Service.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -52,10 +53,9 @@ namespace Company.Service.Services
                 Country = employee.Country,
                 HomePhone = employee.HomePhone,
                 Extension = employee.Extension,
-                Photo = employee.Photo,
                 Notes = employee.Notes,
                 ReportsTo = employee.ReportsTo,
-                PhotoPath = employee.PhotoPath
+                PhotoPath = DocumentSettings.UploadFile("Files/Images", employee.Photo),
             };
 
             // Call the repository to add the employee
@@ -69,8 +69,8 @@ namespace Company.Service.Services
 
         IEnumerable<Employee> IEmployeeService.GetAll()
         {
-            var departments = _employeeRepository.GetAll();
-            return departments;
+            var employees = _employeeRepository.GetAll();
+            return employees;
         }
 
 
