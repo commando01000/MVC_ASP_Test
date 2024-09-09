@@ -39,6 +39,18 @@ namespace MVC_ASP_Test
             ).AddEntityFrameworkStores<NorthwindContext>().
             AddDefaultTokenProviders();
 
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.Cookie.Name = "MVC_ASP_Test";
+                options.Cookie.HttpOnly = true;
+                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(40);
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.Cookie.SameSite = SameSiteMode.Strict;
+            });
 
             var app = builder.Build();
             // Configure the HTTP request pipeline.
@@ -55,6 +67,7 @@ namespace MVC_ASP_Test
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.MapControllerRoute(
                 name: "default",
