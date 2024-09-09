@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Company.Database.Access.Contexts;
 using Company.Service.Interfaces;
 using Company.Service.Services;
+using Company.Database.Access;
+using Microsoft.AspNetCore.Identity;
 
 namespace MVC_ASP_Test
 {
@@ -24,6 +26,19 @@ namespace MVC_ASP_Test
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IOrderService, OrderService>();
             //builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
+                config =>
+                //add custom configurations here
+                {
+                    config.Password.RequiredUniqueChars = 1;
+                    config.User.RequireUniqueEmail = true;
+                    config.Lockout.AllowedForNewUsers = true;
+                    config.Lockout.MaxFailedAccessAttempts = 3;
+                    config.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(1);
+                }
+            ).AddEntityFrameworkStores<NorthwindContext>().
+            AddDefaultTokenProviders();
+
 
             var app = builder.Build();
             // Configure the HTTP request pipeline.
