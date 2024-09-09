@@ -30,7 +30,10 @@
                     {
                         <tr>
                             <th scope="row">@employee.EmployeeId</th>
-                            <td><img src="~/@employee.PhotoPath" width="50" height="50" alt="@employee.FirstName" /></td>
+                            @if(employee.PhotoPath != null)
+                            {
+                                <td><img src="~/@employee.PhotoPath" width="50" height="50" alt="@employee.FirstName" /></td>
+                            }
                             <td>@employee.FirstName</td>
                             <td>@employee.LastName</td>
                             <td>@employee.City</td>
