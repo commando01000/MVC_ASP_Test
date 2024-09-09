@@ -73,8 +73,6 @@ namespace Company.Service.Services
             return employees;
         }
 
-
-
         Employee IEmployeeService.GetById(int id)
         {
             return _employeeRepository.GetById(id);
