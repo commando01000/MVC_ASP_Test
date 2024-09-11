@@ -12,6 +12,13 @@ namespace MVC_ASP_Test.Controllers
         {
             this._userManager = userManager;
         }
+
+        public IActionResult SignUp()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public async Task<IActionResult> SignUp(SignUpViewModel model)
         {
             if (ModelState.IsValid)
