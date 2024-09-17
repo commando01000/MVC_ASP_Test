@@ -1,4 +1,5 @@
 ﻿using Company.Database.Access;
+using Company.Service.Helper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MVC_ASP_Test.Models;
@@ -8,9 +9,11 @@ namespace MVC_ASP_Test.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        public AccountController(UserManager<ApplicationUser> userManager)
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             this._userManager = userManager;
+            this._signInManager = signInManager;
         }
 
         public IActionResult SignUp()
@@ -29,7 +32,7 @@ namespace MVC_ASP_Test.Controllers
                     Email = model.Email,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    isActive = true
+                    isActive = model.isAgree
                 };
                 var result = await this._userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -47,6 +50,76 @@ namespace MVC_ASP_Test.Controllers
             return View();
         }
         public IActionResult SignIn()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SignIn(SignInViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await this._userManager.FindByEmailAsync(model.Email);
+                if (user != null)
+                {
+                    var result = await this._userManager
+                        .CheckPasswordAsync(user, model.Password);
+                    if (result)
+                    {
+                        await this._signInManager
+                            .SignInAsync(user, model.RememberMe);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Email or Password is not correct.");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Email or Password is not correct.");
+                }
+            }
+            return View();
+        }
+        public async Task<IActionResult> SignOut()
+        {
+            await this._signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult ForgetPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task <IActionResult> ForgetPassword(ForgetPasswordViewModel forgetPasswordViewModel)
+        {
+            if(ModelState.IsValid)
+            {
+                var user = await this._userManager.FindByEmailAsync(forgetPasswordViewModel.Email);
+                if(user != null)
+                {
+                    var token = await this._userManager
+                        .GeneratePasswordResetTokenAsync(user);
+                    var passwordResetLink = Url.Action("ResetPassword", "Account",
+                        new { email = forgetPasswordViewModel.Email, token = token }, Request.Scheme);
+
+                    var email = new Email
+                    {
+                        To = forgetPasswordViewModel.Email,
+                        Subject = "Reset Password",
+                        Body = passwordResetLink
+                    };
+                    EmailSettings.SendEmail(email);
+                    // send email
+                    return RedirectToAction("CheckYourInbox");
+                }
+                return View();
+            }
+            return View();
+        }
+        public IActionResult CheckYourInbox()
         {
             return View();
         }

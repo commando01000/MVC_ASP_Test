@@ -71,12 +71,15 @@ namespace MVC_ASP_Test
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}");
+                pattern: "{controller=Account}/{action=SignUp}");
 
             app.MapControllerRoute(
                 name: "about-us",
                 pattern: "{controller=About}/{action=Index}");
 
+            app.MapControllerRoute(
+                name: "sign-in",
+                pattern: "{controller=Account}/{action=SignIn}");
             app.Run();
         }
     }

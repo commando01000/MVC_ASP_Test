@@ -30,12 +30,29 @@
                         <li class="nav-item">
                             <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Orders" && ViewContext.RouteData.Values["action"].ToString() == "Index" ? "text-success" : "text-dark")" asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
                         </li>
-                        <li class="nav-item">
+                        @* check if user is logged in or not to display the signout *@
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="SignOut">Sign Out</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="SignUp">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="SignIn">Login</a>
+                            </li>
+                        }
+                        
+                        @* <li class="nav-item">
                             <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Account" && ViewContext.RouteData.Values["action"].ToString() == "SignUp" ? "text-success" : "text-dark")" asp-area="" asp-controller="Account" asp-action="SignUp">Register</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Account" && ViewContext.RouteData.Values["action"].ToString() == "SignIn" ? "text-success" : "text-dark")" asp-area="" asp-controller="Account" asp-action="SignIn">Login</a>
-                        </li>
+                        </li> *@
                     </ul>
                 </div>
             </div>

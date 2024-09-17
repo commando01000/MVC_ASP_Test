@@ -1,0 +1,44 @@
+﻿@model SignInViewModel
+@{
+    ViewData["Title"] = "SignIn";
+    Layout = "_AuthLayout";
+}
+<h1>Sign In</h1>
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="SignIn">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="form-check">
+                    <label asp-for="RememberMe" class="form-check-label"> Remember me</label>
+                    <input asp-for="RememberMe" class="form-check-input" />
+                <span asp-validation-for="RememberMe" class="text-danger"></span>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Sign In" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="SignUp" class="btn btn-primary" asp-controller="Account">Sign Up</a>
+    <a asp-action="ForgetPassword" class="text-primary btn btn-btn-warning" asp-controller="Account">Forget Password ?</a>
+</div>
+

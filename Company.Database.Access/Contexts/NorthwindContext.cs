@@ -20,9 +20,7 @@ public partial class NorthwindContext : IdentityDbContext<ApplicationUser>
     public virtual DbSet<AlphabeticalListOfProduct> AlphabeticalListOfProducts { get; set; }
 
     public virtual DbSet<Category> Categories { get; set; }
-
     public virtual DbSet<CategorySalesFor1997> CategorySalesFor1997s { get; set; }
-
     public virtual DbSet<CurrentProductList> CurrentProductLists { get; set; }
 
     public virtual DbSet<Customer> Customers { get; set; }
