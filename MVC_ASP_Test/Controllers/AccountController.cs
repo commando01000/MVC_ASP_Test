@@ -95,12 +95,12 @@ namespace MVC_ASP_Test.Controllers
             return View();
         }
         [HttpPost]
-        public async Task <IActionResult> ForgetPassword(ForgetPasswordViewModel forgetPasswordViewModel)
+        public async Task<IActionResult> ForgetPassword(ForgetPasswordViewModel forgetPasswordViewModel)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var user = await this._userManager.FindByEmailAsync(forgetPasswordViewModel.Email);
-                if(user != null)
+                if (user != null)
                 {
                     var token = await this._userManager
                         .GeneratePasswordResetTokenAsync(user);
@@ -117,12 +117,44 @@ namespace MVC_ASP_Test.Controllers
                     // send email
                     return RedirectToAction("CheckYourInbox");
                 }
+                else
+                {
+                    ModelState.AddModelError("", "Email is not correct.");
+                }
                 return View();
             }
             return View();
         }
         public IActionResult CheckYourInbox()
         {
+            return View();
+        }
+        public IActionResult ResetPassword(string Email, string Token)
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task <IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user is not null)
+                {
+                    var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+                    if(result.Succeeded)
+                    {
+                        return RedirectToAction("SignIn", "Account");
+                    }
+                    else
+                    {
+                        foreach(var error in result.Errors)
+                        {
+                            ModelState.AddModelError("", error.Description);
+                        }
+                    }
+                }
+            }
             return View();
         }
     }
