@@ -37,6 +37,8 @@ namespace MVC_ASP_Test.Controllers
                 var result = await this._userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await this._signInManager
+                           .SignInAsync(user, model.isAgree);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -85,7 +87,7 @@ namespace MVC_ASP_Test.Controllers
         public async Task<IActionResult> SignOut()
         {
             await this._signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("SignIn", "Account");
         }
 
         public IActionResult ForgetPassword()
