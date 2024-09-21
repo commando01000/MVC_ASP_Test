@@ -69,7 +69,7 @@ namespace MVC_ASP_Test.Controllers
         // POST: UserController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, IFormCollection collection)
+        public async Task<IActionResult> Edit(string id, IFormCollection collection, ApplicationUser user)
         {
             try
             {
@@ -80,6 +80,7 @@ namespace MVC_ASP_Test.Controllers
                     var Email = collection["Email"];
                     var userName = collection["Email"].ToString().Split('@')[0]; // UserName
                     var normalizedEmail = collection["Email"].ToString().ToUpper();
+                    var passwordHash = this._userManager.PasswordHasher.HashPassword(user, user.PasswordHash.ToString());
                     var normailizedUserName = collection["Email"].ToString().ToUpper().Split('@')[0];
                     await this._userManager.UpdateAsync(new ApplicationUser
                     {
