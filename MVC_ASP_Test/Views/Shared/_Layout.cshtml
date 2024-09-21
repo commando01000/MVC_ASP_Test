@@ -25,12 +25,16 @@
                             <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewContext.RouteData.Values["action"].ToString() == "Index" ? "text-success" : "text-dark")" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
+
                             <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "About" && ViewContext.RouteData.Values["action"].ToString() == "Index" ? "text-success" : "text-dark")" asp-area="" asp-controller="About" asp-action="Index">About Us</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Orders" && ViewContext.RouteData.Values["action"].ToString() == "Index" ? "text-success" : "text-dark")" asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
                         </li>
-                        @* check if user is logged in or not to display the signout *@
+                        <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="Index">Users</a>
+                            </li>
+                        @* check if user is logged in and is admin or not to display the signout *@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">

@@ -12,5 +12,6 @@ namespace Company.Database.Access
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool isActive { get; set; }
+        public bool isDeleted { get; set; }
     }
 }

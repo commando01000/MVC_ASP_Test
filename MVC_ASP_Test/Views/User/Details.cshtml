@@ -1,0 +1,23 @@
+﻿@using Company.Database.Access
+@model ApplicationUser
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label asp-for="@Model.UserName" class="col-form-label"></label>
+            <input asp-for="@Model.UserName" type="text" name="name" readonly />
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Email" class="col-form-label"></label>
+            <input asp-for="@Model.Email" type="text" name="name" readonly />
+        </div>
+        <a asp-action="Update" asp-controller="User" asp-route-id="@Model.Id">Update</a>
+        <a asp-action="Index" asp-controller="User" asp-route-id="@Model.Id">Back to list</a>
+    </div>
+</div>
