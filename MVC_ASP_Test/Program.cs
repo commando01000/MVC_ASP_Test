@@ -46,7 +46,6 @@ namespace MVC_ASP_Test
                 options.AccessDeniedPath = "/Account/AccessDenied";
                 options.Cookie.Name = "MVC_ASP_Test";
                 options.Cookie.HttpOnly = true;
-                options.AccessDeniedPath = "/Account/AccessDenied";
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(40);
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Cookie.SameSite = SameSiteMode.Strict;
@@ -66,20 +65,20 @@ namespace MVC_ASP_Test
 
             app.UseRouting();
 
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Account}/{action=SignUp}");
+                pattern: "{controller=Account}/{action=SignIn}");
 
             app.MapControllerRoute(
                 name: "about-us",
                 pattern: "{controller=About}/{action=Index}");
 
             app.MapControllerRoute(
-                name: "sign-in",
-                pattern: "{controller=Account}/{action=SignIn}");
+                name: "sign-up",
+                pattern: "{controller=Account}/{action=SignUp}");
             app.Run();
         }
     }

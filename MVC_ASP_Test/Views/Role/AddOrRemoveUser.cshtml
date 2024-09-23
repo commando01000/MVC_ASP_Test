@@ -13,9 +13,9 @@
     {
         <div class="form-group">
             <!-- Checkbox for IsSelected -->
-            <input asp-for="@Model[i].IsSelected" />
+            <input type="checkbox" asp-for="@Model[i].IsSelected" />
 
-            <label asp-for="@Model[i].UserName">
+            <label asp-for="@Model[i].IsSelected">
                 @Model[i].UserName
             </label>
 

@@ -3,6 +3,7 @@ using Company.Database.Access.Entities;
 using Company.Repository;
 using Company.Service.Interfaces;
 using Company.Service.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;

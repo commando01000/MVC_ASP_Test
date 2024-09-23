@@ -1,12 +1,14 @@
 using Company.Repository;
 using Company.Repository.Interfaces;
 using Company.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MVC_ASP_Test.Models;
 using System.Diagnostics;
 
 namespace MVC_ASP_Test.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

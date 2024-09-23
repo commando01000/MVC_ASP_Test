@@ -1,4 +1,5 @@
 ﻿using Company.Database.Access;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,8 @@ using MVC_ASP_Test.Models;
 
 namespace MVC_ASP_Test.Controllers
 {
+    // authorize for admin and Super Admin
+    [Authorize(Roles = "Admin, Super Admin")]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
