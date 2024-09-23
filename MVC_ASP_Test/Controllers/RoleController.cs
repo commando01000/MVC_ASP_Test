@@ -1,15 +1,19 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Company.Database.Access;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MVC_ASP_Test.Models;
 
 namespace MVC_ASP_Test.Controllers
 {
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        public RoleController(RoleManager<IdentityRole> roleManager)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public RoleController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
-         this._roleManager = roleManager;
+            this._roleManager = roleManager;
+            this._userManager = userManager;
         }
         public async Task<IActionResult> Index()
         {
@@ -19,7 +23,7 @@ namespace MVC_ASP_Test.Controllers
         }
 
         public IActionResult Create()
-        { 
+        {
             return View();
         }
 
@@ -28,7 +32,7 @@ namespace MVC_ASP_Test.Controllers
         {
             if (ModelState.IsValid)
             {
-                if((await _roleManager.CreateAsync(role)).Succeeded)
+                if ((await _roleManager.CreateAsync(role)).Succeeded)
                 {
                     return RedirectToAction("Index");
                 }
@@ -50,7 +54,6 @@ namespace MVC_ASP_Test.Controllers
                 return View(role);
             }
         }
-        [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
@@ -78,10 +81,63 @@ namespace MVC_ASP_Test.Controllers
             {
                 role.Name = Role.Name;
                 role.NormalizedName = Role.Name.ToUpper();
-                this._roleManager.UpdateAsync(role);
+                await this._roleManager.UpdateAsync(role);
                 return RedirectToAction("Index");
             }
             return View(Role);
+        }
+        public async Task<IActionResult> AddOrRemoveUser(string id)
+        {
+            var role = await this._roleManager.FindByIdAsync(id);
+
+            var users = await this._userManager.Users.ToListAsync();
+
+            var usersInRole = new List<UserRoleViewModel>();
+
+            foreach (var user in users)
+            {
+                var userRole = new UserRoleViewModel
+                {
+                    UserId = user.Id,
+                    UserName = user.UserName
+                };
+                if (await this._userManager.IsInRoleAsync(user, role.Name))
+                {
+                    userRole.IsSelected = true;
+                }
+                else
+                {
+                    userRole.IsSelected = false;
+                }
+                usersInRole.Add(userRole);
+            }
+            ViewBag.RoleId = role.Id;
+            return View(usersInRole);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddOrRemoveUser(string id, IEnumerable<UserRoleViewModel> users)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+
+            if (ModelState.IsValid)
+            {
+                foreach (var user in users)
+                {
+                    var appUser = await _userManager.FindByIdAsync(user.UserId);
+                    if (appUser != null)
+                    {
+                        if (user.IsSelected && !(await _userManager.IsInRoleAsync(appUser, id)))
+                        {
+                            await _userManager.AddToRoleAsync(appUser, role.Name);
+                        }
+                        else
+                        {
+                            await _userManager.RemoveFromRoleAsync(appUser, role.Name);
+                        }
+                    }
+                }
+            }
+            return RedirectToAction(nameof(Edit), new { id = role.Id });
         }
     }
 }
