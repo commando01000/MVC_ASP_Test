@@ -1,13 +1,8 @@
 ﻿using Company.Database.Access.Contexts;
 using Company.Database.Access.Entities;
-using Company.Repository;
 using Company.Service.Interfaces;
-using Company.Service.Services;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using static NuGet.Packaging.PackagingConstants;
 
 namespace MVC_ASP_Test.Controllers
 {
@@ -31,7 +26,7 @@ namespace MVC_ASP_Test.Controllers
         // GET: OrdersController/Details/5
         public ActionResult Cust_Orders(string id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }

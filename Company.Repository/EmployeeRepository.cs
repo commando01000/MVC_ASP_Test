@@ -1,12 +1,6 @@
 ﻿using Company.Database.Access.Contexts;
 using Company.Database.Access.Entities;
 using Company.Repository.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Company.Repository
 {
@@ -22,7 +16,7 @@ namespace Company.Repository
             this._context = context;
             //this.unitOfWork = _unitOfWork;
         }
-       void IEmployeeRepository.Add(Employee employee)
+        void IEmployeeRepository.Add(Employee employee)
         {
             this._context.Employees.Add(employee);
             //this._unitOfWork.Commit();
@@ -33,7 +27,7 @@ namespace Company.Repository
         {
             return this._context.Employees.Where(e => e.FirstName.ToLower().Trim().Contains(name.ToLower().Trim()) || e.LastName.ToLower().Trim().Contains(name.ToLower().Trim())).ToList();
         }
-       void IEmployeeRepository.Delete(int id)
+        void IEmployeeRepository.Delete(int id)
         {
             this._context.Employees.Remove(this._context.Employees.Find(id));
             this._context.SaveChanges();

@@ -2,18 +2,13 @@
 using Company.Database.Access.Entities;
 using Company.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Company.Repository
 {
     public class OrderRepository : IOrderRepository
     {
         private readonly NorthwindContext _context;
-        private readonly  NorthwindContextProcedures _contextProcedures;
+        private readonly NorthwindContextProcedures _contextProcedures;
         public OrderRepository(NorthwindContext context, NorthwindContextProcedures contextProcedures)
         {
             this._context = context;
@@ -30,7 +25,7 @@ namespace Company.Repository
         {
             return this._context.Customers.Include(c => c.Orders).AsQueryable();
         }
-        
+
         ICollection<CustOrdersOrdersResult> getOrdersByCustomerId(string customerId)
         {
             //return this._context.Orders
@@ -58,7 +53,7 @@ namespace Company.Repository
                 .Include(o => o.ShipViaNavigation).AsQueryable().FirstOrDefault(o => o.OrderId == id);
         }
 
-       public ICollection<Shipper> GetShippers()
+        public ICollection<Shipper> GetShippers()
         {
             return this._context.Shippers.ToList();
         }

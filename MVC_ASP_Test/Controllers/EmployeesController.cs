@@ -1,7 +1,5 @@
 ﻿using Company.Database.Access.Entities;
 using Company.Service.Interfaces;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MVC_ASP_Test.Controllers

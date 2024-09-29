@@ -24,6 +24,9 @@ namespace MVC_ASP_Test.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        [DataType(DataType.PhoneNumber)]
+        public string? PhoneNumber { get; set; }
+
         public bool isAgree { get; set; }
     }
 }

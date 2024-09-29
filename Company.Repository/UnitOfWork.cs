@@ -1,11 +1,5 @@
 ﻿using Company.Database.Access.Contexts;
 using Company.Repository.Interfaces;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Company.Repository
 {
@@ -16,7 +10,7 @@ namespace Company.Repository
         public INorthwindContextProcedures NorthwindContextProcedures { get; set; }
 
         private readonly NorthwindContext _context;
-        private  INorthwindContextProcedures _contextProcedures;
+        private INorthwindContextProcedures _contextProcedures;
         public UnitOfWork(NorthwindContext _context, NorthwindContextProcedures _contextProcedures)
         {
             this._context = _context;

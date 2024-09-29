@@ -3,13 +3,6 @@ using Company.Database.Access.Entities;
 using Company.Repository;
 using Company.Repository.Interfaces;
 using Company.Service.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Company.Service.Services
 {
@@ -54,9 +47,9 @@ namespace Company.Service.Services
             return this._orderRepository.GetAll();
         }
 
-        public IQueryable <Customer> getAllCustomers()
+        public IQueryable<Customer> getAllCustomers()
         {
-           OrderRepository Order_Repo = (OrderRepository) this._orderRepository;
+            OrderRepository Order_Repo = (OrderRepository)this._orderRepository;
             return Order_Repo.getAllCustomers();
         }
 
@@ -71,7 +64,7 @@ namespace Company.Service.Services
         void IOrderService.Update(Order order, int id)
         {
             // Retrieve the existing order from the repository by ID
-            var existingOrder = _orderRepository.GetById(id); 
+            var existingOrder = _orderRepository.GetById(id);
 
             if (existingOrder != null && existingOrder.OrderId == id)
             {

@@ -1,5 +1,3 @@
-using Company.Repository;
-using Company.Repository.Interfaces;
 using Company.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +17,7 @@ namespace MVC_ASP_Test.Controllers
             _logger = logger;
         }
 
-       public IActionResult Index(string searchInp)
+        public IActionResult Index(string searchInp)
         {
             if (!string.IsNullOrEmpty(searchInp))
             {

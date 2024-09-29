@@ -1,6 +1,4 @@
 ﻿using Company.Database.Access;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -113,7 +111,7 @@ namespace MVC_ASP_Test.Controllers
             {
                 var user = await this._userManager.FindByIdAsync(id.ToString());
                 await this._userManager.DeleteAsync(user);
-                return RedirectToAction(nameof(Index)); 
+                return RedirectToAction(nameof(Index));
             }
             catch
             {

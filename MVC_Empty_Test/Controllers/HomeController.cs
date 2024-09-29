@@ -13,7 +13,7 @@ namespace MVC_Empty_Test.Controllers
 
         public IActionResult About()
         {
-            return RedirectToRoute (new { controller = "Home", action = "Index" });
+            return RedirectToRoute(new { controller = "Home", action = "Index" });
         }
     }
 }

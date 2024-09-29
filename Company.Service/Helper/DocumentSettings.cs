@@ -1,16 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Company.Service.Helper
 {
     public class DocumentSettings
     {
-        public static string UploadFile(string path, IFormFile file=null)
+        public static string UploadFile(string path, IFormFile file = null)
         {
             // 1. get path
             string folderPath = Path.Combine("wwwroot", path);

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Company.Database.Access.Entities;
-using System.Threading.Tasks;
+﻿using Company.Database.Access.Entities;
 
 namespace Company.Service.Interfaces
 {

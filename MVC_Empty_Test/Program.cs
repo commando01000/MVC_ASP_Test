@@ -5,7 +5,7 @@ namespace MVC_Empty_Test
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();

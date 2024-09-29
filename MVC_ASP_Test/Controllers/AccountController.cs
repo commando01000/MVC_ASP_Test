@@ -1,5 +1,7 @@
 ﻿using Company.Database.Access;
 using Company.Service.Helper;
+using Company.Service.Interfaces;
+using Company.Service.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MVC_ASP_Test.Models;
@@ -10,10 +12,12 @@ namespace MVC_ASP_Test.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        private readonly ISMSService _smsService;
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ISMSService smsService)
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
+            this._smsService = smsService;
         }
 
         public IActionResult SignUp()
@@ -31,6 +35,7 @@ namespace MVC_ASP_Test.Controllers
                     UserName = model.Email.Split('@')[0],
                     Email = model.Email,
                     FirstName = model.FirstName,
+                    PhoneNumber = model.PhoneNumber,
                     LastName = model.LastName,
                     isActive = model.isAgree
                 };
@@ -39,6 +44,12 @@ namespace MVC_ASP_Test.Controllers
                 {
                     await this._signInManager
                            .SignInAsync(user, model.isAgree);
+                    var sms = new SMS
+                    {
+                        Body = $"Your Account Have Been Created Successfully + {DateTime.Now.ToString()}",
+                        ToPhone = model.PhoneNumber
+                    };
+                    _smsService.SendSMS(sms);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -70,6 +81,12 @@ namespace MVC_ASP_Test.Controllers
                     {
                         await this._signInManager
                             .SignInAsync(user, model.RememberMe);
+                        var sms = new SMS
+                        {
+                            Body = $"You have been logged in successfully. + {DateTime.Now.ToString()}",
+                            ToPhone = user.PhoneNumber
+                        };
+                        //_smsService.SendSMS(sms);
                         return RedirectToAction("Index", "Home");
                     }
                     else
@@ -113,8 +130,8 @@ namespace MVC_ASP_Test.Controllers
                         Subject = "Reset Password",
                         Body = passwordResetLink
                     };
-                    EmailSettings.SendEmail(email);
                     // send email
+                    EmailSettings.SendEmail(email);
                     return RedirectToAction("CheckYourInbox");
                 }
                 else
@@ -134,7 +151,7 @@ namespace MVC_ASP_Test.Controllers
             return View();
         }
         [HttpPost]
-        public async Task <IActionResult> ResetPassword(ResetPasswordViewModel model)
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -142,13 +159,13 @@ namespace MVC_ASP_Test.Controllers
                 if (user is not null)
                 {
                     var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
-                    if(result.Succeeded)
+                    if (result.Succeeded)
                     {
                         return RedirectToAction("SignIn", "Account");
                     }
                     else
                     {
-                        foreach(var error in result.Errors)
+                        foreach (var error in result.Errors)
                         {
                             ModelState.AddModelError("", error.Description);
                         }

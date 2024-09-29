@@ -1,11 +1,12 @@
+using Company.Database.Access;
+using Company.Database.Access.Contexts;
 using Company.Repository;
 using Company.Repository.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Company.Database.Access.Contexts;
+using Company.Service.Helper;
 using Company.Service.Interfaces;
 using Company.Service.Services;
-using Company.Database.Access;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace MVC_ASP_Test
 {
@@ -21,6 +22,8 @@ namespace MVC_ASP_Test
 
             builder.Services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddScoped<NorthwindContextProcedures>();
+            builder.Services.Configure<TwilioSettings>(builder.Configuration.GetSection("TwilioSettings"));
+            builder.Services.AddScoped<ISMSService, SMSService>();
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();

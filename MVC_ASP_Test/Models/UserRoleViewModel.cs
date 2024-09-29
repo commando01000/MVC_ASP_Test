@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace MVC_ASP_Test.Models
+﻿namespace MVC_ASP_Test.Models
 {
     public class UserRoleViewModel
     {
