@@ -49,7 +49,7 @@ namespace MVC_ASP_Test.Controllers
                         Body = $"Your Account Have Been Created Successfully + {DateTime.Now.ToString()}",
                         ToPhone = model.PhoneNumber
                     };
-                    _smsService.SendSMS(sms);
+                    //_smsService.SendSMS(sms);
                     return RedirectToAction("Index", "Home");
                 }
                 else
