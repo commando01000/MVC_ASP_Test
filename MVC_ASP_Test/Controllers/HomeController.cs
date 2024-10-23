@@ -28,6 +28,17 @@ namespace MVC_ASP_Test.Controllers
             return View(employees);
         }
 
+        public IActionResult Search(string searchInp)
+        {
+            if (!string.IsNullOrEmpty(searchInp))
+            {
+                var Emps = _employeeService.GetEmployeesByName(searchInp);
+                return PartialView("PartialViews/EmployeeTablePartialView", Emps);
+            }
+            var employees = _employeeService.GetAll();
+            return PartialView("PartialViews/EmployeeTablePartialView", employees);
+        }
+
         public IActionResult Privacy()
         {
             return View();
