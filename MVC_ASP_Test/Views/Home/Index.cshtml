@@ -13,41 +13,9 @@
         <input class="form-control" type="text" id="searchInp" placeholder="Search By Name" name="searchInp" value="" />
     </div>
 
-    @if (Model.Any())
-    {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th>Photo</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">City</th>
-                    <th scope="col">Birthdate</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var employee in Model)
-                {
-                    <tr>
-                        <th scope="row">@employee.EmployeeId</th>
-                        @if (employee.PhotoPath != null)
-                        {
-                            <td><img src="~/@employee.PhotoPath" width="50" height="50" alt="@employee.FirstName" /></td>
-                        }
-                        <td>@employee.FirstName</td>
-                        <td>@employee.LastName</td>
-                        <td>@employee.City</td>
-                        <td>@employee.BirthDate</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        <p>No employees</p>
-    }
+    @*Employee Table Partial View*@
+    @await Html.PartialAsync("~/Views/Home/PartialViews/EmployeeTablePartialView.cshtml", Model)
+
 </section>
 
 @section Scripts
@@ -59,7 +27,7 @@
             $.ajax({
                 type: "get",
                 url: "/Home/Search",
-                data: { searchInp: searchInp.value },
+                data: { searchInp: searchInp.value || "" },  // Send empty string if input is cleared
                 success: function (data) {
                     $(".table").replaceWith(data);
                 },
@@ -70,3 +38,4 @@
         });
     </script>
 }
+

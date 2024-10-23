@@ -7,6 +7,7 @@ using Company.Service.Interfaces;
 using Company.Service.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MVC_ASP_Test.ApplicationServices;
 
 namespace MVC_ASP_Test
 {
@@ -15,19 +16,14 @@ namespace MVC_ASP_Test
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            var configuration = builder.Configuration;
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
 
             builder.Services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddScoped<NorthwindContextProcedures>();
-            builder.Services.Configure<TwilioSettings>(builder.Configuration.GetSection("TwilioSettings"));
-            builder.Services.AddScoped<ISMSService, SMSService>();
-            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
-            builder.Services.AddScoped<IOrderService, OrderService>();
+
             //builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
                 config =>
@@ -42,17 +38,20 @@ namespace MVC_ASP_Test
             ).AddEntityFrameworkStores<NorthwindContext>().
             AddDefaultTokenProviders();
 
+            builder.Services.AddApplicationServices(builder);
+
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Account/Login";
-                options.LogoutPath = "/Account/Logout";
+                options.LogoutPath = "/Account/SignOut";
                 options.AccessDeniedPath = "/Account/AccessDenied";
                 options.Cookie.Name = "MVC_ASP_Test";
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(40);
-                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
                 options.Cookie.SameSite = SameSiteMode.Strict;
             });
+
 
             var app = builder.Build();
             // Configure the HTTP request pipeline.

@@ -2,6 +2,8 @@
 using Company.Service.Helper;
 using Company.Service.Interfaces;
 using Company.Service.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MVC_ASP_Test.Models;
@@ -44,11 +46,11 @@ namespace MVC_ASP_Test.Controllers
                 {
                     await this._signInManager
                            .SignInAsync(user, model.isAgree);
-                    var sms = new SMS
-                    {
-                        Body = $"Your Account Have Been Created Successfully + {DateTime.Now.ToString()}",
-                        ToPhone = model.PhoneNumber
-                    };
+                    //var sms = new SMS
+                    //{
+                    //    Body = $"Your Account Have Been Created Successfully + {DateTime.Now.ToString()}",
+                    //    ToPhone = model.PhoneNumber
+                    //};
                     //_smsService.SendSMS(sms);
                     return RedirectToAction("Index", "Home");
                 }
@@ -81,11 +83,11 @@ namespace MVC_ASP_Test.Controllers
                     {
                         await this._signInManager
                             .SignInAsync(user, model.RememberMe);
-                        var sms = new SMS
-                        {
-                            Body = $"You have been logged in successfully. + {DateTime.Now.ToString()}",
-                            ToPhone = user.PhoneNumber
-                        };
+                        //var sms = new SMS
+                        //{
+                        //    Body = $"You have been logged in successfully. + {DateTime.Now.ToString()}",
+                        //    ToPhone = user.PhoneNumber
+                        //};
                         //_smsService.SendSMS(sms);
                         return RedirectToAction("Index", "Home");
                     }
@@ -173,6 +175,29 @@ namespace MVC_ASP_Test.Controllers
                 }
             }
             return View();
+        }
+        public IActionResult GoogleLogin()
+        {
+            var prop = new AuthenticationProperties
+            {
+                RedirectUri = Url.Action("GoogleResponse")
+            };
+            return Challenge(prop, GoogleDefaults.AuthenticationScheme);
+        }
+
+        public async Task<IActionResult> GoogleResponse()
+        {
+            var result = await HttpContext.AuthenticateAsync
+                (GoogleDefaults.AuthenticationScheme);
+
+            var claims = result.Principal.Identities.FirstOrDefault().Claims.Select(claim => new
+            {
+                claim.Issuer,
+                claim.OriginalIssuer,
+                claim.Type,
+                claim.Value
+            });
+            return RedirectToAction("Index", "Home");
         }
     }
 }
