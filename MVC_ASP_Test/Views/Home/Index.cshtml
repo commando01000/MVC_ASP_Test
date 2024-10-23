@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -10,11 +10,12 @@
         <a asp-action="Create" class="btn btn-primary" asp-controller="Employees">Create New User</a>
     </div>
     <div>
-        <input class="form-control" type="text" placeholder="Search By Name" name="searchInp" value="" />
+        <input class="form-control" type="text" id="searchInp" placeholder="Search By Name" name="searchInp" value="" />
     </div>
+
     @if (Model.Any())
     {
-            <table class="table">
+        <table class="table">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -24,23 +25,23 @@
                     <th scope="col">City</th>
                     <th scope="col">Birthdate</th>
                 </tr>
-                </thead>
-                <tbody>
-                    @foreach (var employee in Model)
-                    {
-                        <tr>
-                            <th scope="row">@employee.EmployeeId</th>
-                            @if(employee.PhotoPath != null)
-                            {
-                                <td><img src="~/@employee.PhotoPath" width="50" height="50" alt="@employee.FirstName" /></td>
-                            }
-                            <td>@employee.FirstName</td>
-                            <td>@employee.LastName</td>
-                            <td>@employee.City</td>
-                            <td>@employee.BirthDate</td>
-                        </tr>
-                    }
-                </tbody>
+            </thead>
+            <tbody>
+                @foreach (var employee in Model)
+                {
+                    <tr>
+                        <th scope="row">@employee.EmployeeId</th>
+                        @if (employee.PhotoPath != null)
+                        {
+                            <td><img src="~/@employee.PhotoPath" width="50" height="50" alt="@employee.FirstName" /></td>
+                        }
+                        <td>@employee.FirstName</td>
+                        <td>@employee.LastName</td>
+                        <td>@employee.City</td>
+                        <td>@employee.BirthDate</td>
+                    </tr>
+                }
+            </tbody>
         </table>
     }
     else
@@ -48,3 +49,24 @@
         <p>No employees</p>
     }
 </section>
+
+@section Scripts
+{
+    <script>
+        var searchInp = document.getElementById("searchInp");
+        searchInp.addEventListener("keyup", function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: "get",
+                url: "/Home/Search",
+                data: { searchInp: searchInp.value },
+                success: function (data) {
+                    $(".table").replaceWith(data);
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                }
+            });
+        });
+    </script>
+}
